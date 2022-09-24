@@ -8,21 +8,32 @@ import InfoIcon from "@mui/icons-material/Info";
 import { CustomeImageData } from "../models/Model";
 import { useEffect, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   alpha,
+  AppBar,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
   Menu,
   MenuItem,
   MenuProps,
+  Slide,
   styled,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { TransitionProps } from "@mui/material/transitions";
+import AddUpdateImage from "./AddUpdateImg";
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -65,6 +76,16 @@ const StyledMenu = styled((props: MenuProps) => (
     },
   },
 }));
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export default function PortfolioImageList({ pageDat }: any) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -80,9 +101,22 @@ export default function PortfolioImageList({ pageDat }: any) {
     setOpendelete(false);
   };
   const handleEdit = () => {
-    setAnchorEl(null);
-    setOpendelete(false);
+    // setAnchorEl(null);
+    // setOpendelete(false);
+    setOpenEdit(true);
   };
+
+  const [openEdit, setOpenEdit] = React.useState(false);
+
+  // const handleClickOpen = () => {
+  //   setOpenEdit(true);
+  // };
+
+  const handleCloseEdit = () => {
+    setAnchorEl(null);
+    setOpenEdit(false);
+  };
+
   return (
     <div>
       <ImageList cols={3}>
@@ -126,7 +160,7 @@ export default function PortfolioImageList({ pageDat }: any) {
                   open={open}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={(e)=>handleEdit()} disableRipple>
+                  <MenuItem onClick={(e) => handleEdit()} disableRipple>
                     <EditIcon />
                     Edit
                   </MenuItem>
@@ -146,9 +180,7 @@ export default function PortfolioImageList({ pageDat }: any) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Warning dialog?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Warning dialog?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete this item?
@@ -160,6 +192,35 @@ export default function PortfolioImageList({ pageDat }: any) {
             No
           </Button>
         </DialogActions>
+      </Dialog>
+
+      <Dialog
+        fullScreen
+        open={openEdit}
+        onClose={handleCloseEdit}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: "relative" }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleCloseEdit}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Edit Image
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleCloseEdit}>
+              save
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <List style={{ height: "100%", background: "#ddd" }}>
+          <AddUpdateImage />
+        </List>
       </Dialog>
     </div>
   );

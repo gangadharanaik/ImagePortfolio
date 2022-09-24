@@ -161,12 +161,7 @@ export default function AddUpdateImage(_formdata: any) {
             multiline
             rows={3}
             size="small"
-            // error={formValues.description.error}
             value={formValues.description.value}
-            // helperText={
-            //   formValues.description.error &&
-            //   formValues.description.errorMessage
-            // }
             onChange={(e: any) => handleChange(e)}
           />
         </div>
@@ -190,7 +185,8 @@ export default function AddUpdateImage(_formdata: any) {
               onChange={(e: any) => handleChange(e)}
             />
             <Button
-              style={{ width: "97%" }}
+              style={{ width: "97%",margin: '7px'}}
+              
               className="btn-choose"
               variant="outlined"
               component="span"
@@ -215,6 +211,7 @@ export default function AddUpdateImage(_formdata: any) {
           )}
         </div>
         <Button
+        style={{ width: "97%",margin: '7px'}}
           className="btn-upload"
           color="primary"
           variant="contained"
