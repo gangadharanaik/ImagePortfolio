@@ -77,6 +77,24 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
+const editdata = {
+  title: {
+    value: "Title 1",
+    error: false,
+    errorMessage: "You must enter a title",
+  },
+  description: {
+    value: "Some Description",
+    error: false,
+    errorMessage: "You must enter an description",
+  },
+  image: {
+    value: {},
+    error: false,
+    errorMessage: "You must select an image file",
+  },
+};
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -219,7 +237,7 @@ export default function PortfolioImageList({ pageDat }: any) {
           </Toolbar>
         </AppBar>
         <List style={{ height: "100%", background: "#ddd" }}>
-          <AddUpdateImage />
+          <AddUpdateImage editdata={editdata} />
         </List>
       </Dialog>
     </div>

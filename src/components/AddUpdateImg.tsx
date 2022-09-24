@@ -4,8 +4,14 @@ import TextField from "@mui/material/TextField";
 import { Button, Card, Container, Typography } from "@mui/material";
 import { title } from "process";
 
-export default function AddUpdateImage(_formdata: any) {
+export default function AddUpdateImage({ editdata }: any) {
   const [selectedFiles, setSelectedFiles] = React.useState<any[]>([]);
+  React.useEffect(() => {    
+    if(editdata!==undefined){
+        setFormValues(editdata);
+    }
+  }, []);
+
   const [formValues, setFormValues] = React.useState({
     title: {
       value: "",
@@ -30,7 +36,6 @@ export default function AddUpdateImage(_formdata: any) {
     const myVar1 = name as ObjectKey1;
     if (e.target.name === "image") {
       let extension = value.name.split(".").pop();
-      debugger;
       if (
         !(
           extension.toUpperCase() === "png".toUpperCase() ||
@@ -53,8 +58,8 @@ export default function AddUpdateImage(_formdata: any) {
           ...formValues,
           [myVar1]: {
             ...formValues[myVar1],
-            value:value,
-            error: false
+            value: value,
+            error: false,
           },
         };
         setFormValues(newFormValues);
@@ -185,8 +190,7 @@ export default function AddUpdateImage(_formdata: any) {
               onChange={(e: any) => handleChange(e)}
             />
             <Button
-              style={{ width: "97%",margin: '7px'}}
-              
+              style={{ width: "97%", margin: "7px" }}
               className="btn-choose"
               variant="outlined"
               component="span"
@@ -211,7 +215,7 @@ export default function AddUpdateImage(_formdata: any) {
           )}
         </div>
         <Button
-        style={{ width: "97%",margin: '7px'}}
+          style={{ width: "97%", margin: "7px" }}
           className="btn-upload"
           color="primary"
           variant="contained"
