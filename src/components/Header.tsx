@@ -13,13 +13,54 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
+import { alpha, InputBase, styled } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const pages = [
   { label: "Home", link: "/" },
-  { label: "AddImage", link: "/addimage" },
+  { label: "Add Image", link: "/addimage" },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "20ch",
+      "&:focus": {
+        width: "25ch",
+      },
+    },
+  },
+}));
 const ResponsiveHeader = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -97,7 +138,9 @@ const ResponsiveHeader = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to={page.link}>{page.label}</Link></Typography>
+                  <Typography textAlign="center">
+                    <Link to={page.link}>{page.label}</Link>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -132,7 +175,15 @@ const ResponsiveHeader = () => {
               </Button>
             ))}
           </Box>
-
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search Images…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
